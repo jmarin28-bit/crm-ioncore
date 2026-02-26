@@ -1,74 +1,50 @@
 // src/types/index.ts
 
-// Comprehensive TypeScript types for CRM data models.
+// Define Contact Type
+export interface Contact {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  address?: string;
+}
 
-// Type for a Contact
-export type Contact = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
+// Define Account Type
+export interface Account {
+  id: string;
+  name: string;
+  type: 'Customer' | 'Partner' | 'Vendor';
+  owner: string;
+  contacts: Contact[];
+}
 
-// Type for an Account
-export type Account = {
-    id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
+// Define Opportunity Type
+export interface Opportunity {
+  id: string;
+  title: string;
+  account: Account;
+  value: number;
+  stage: 'Prospecting' | 'Proposal' | 'Negotiation' | 'Closed Won' | 'Closed Lost';
+  closeDate?: string; // ISO Date
+}
 
-// Type for an Opportunity
-export type Opportunity = {
-    id: string;
-    name: string;
-    accountId: string;
-    stage: string;
-    amount: number;
-    closeDate: Date;
-    createdAt: Date;
-    updatedAt: Date;
-};
+// Define Activity Type
+export interface Activity {
+  id: string;
+  type: 'Call' | 'Email' | 'Meeting';
+  date: string; // ISO Date
+  description: string;
+  relatedTo: Contact | Account | Opportunity;
+}
 
-// Type for an Activity
-export type Activity = {
-    id: string;
-    type: string;
-    description: string;
-    date: Date;
-    contactId: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
+// Define AI Insight Type
+export interface AIInsight {
+  id: string;
+  type: 'Sales Prediction' | 'Customer Behavior Analysis' | 'Opportunity Suggestion';
+  result: string;
+  createdAt: string; // ISO Date
+}
 
-// Type for a Dashboard
-export type Dashboard = {
-    id: string;
-    name: string;
-    metrics: Record<string, any>;
-    createdAt: Date;
-    updatedAt: Date;
-};
-
-// Type for an AI Insight
-export type AIInsight = {
-    id: string;
-    insightType: string;
-    description: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
-
-// Exporting all types
-export type CRMTypes = {
-    Contact: Contact;
-    Account: Account;
-    Opportunity: Opportunity;
-    Activity: Activity;
-    Dashboard: Dashboard;
-    AIInsight: AIInsight;
-};
+// Export Types
+export type CRMTypes = Contact | Account | Opportunity | Activity | AIInsight;
